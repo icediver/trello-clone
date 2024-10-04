@@ -33,7 +33,7 @@ const handler = async (
 		});
 	} catch (error) {
 		return {
-			error: 'Board not found',
+			error: 'Failed to update',
 		};
 	}
 	revalidatePath(`/board/${board.id}`);
