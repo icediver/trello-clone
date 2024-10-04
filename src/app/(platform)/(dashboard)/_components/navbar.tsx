@@ -4,6 +4,7 @@ import {
 } from '@clerk/nextjs';
 import { Plus } from 'lucide-react';
 
+import { FormPopover } from '@/components/ui/form/form-popover/FormPopover';
 import { Logo } from '@/components/ui/logo/Logo';
 import { Button } from '@/components/ui/shadcn/button';
 
@@ -17,20 +18,28 @@ export function Navbar() {
 				<div className="hidden md:flex">
 					<Logo />
 				</div>
-				<Button
-					className="hidden h-auto rounded-sm px-2 py-1.5 md:block"
-					size="sm"
-					variant="primary"
+				<FormPopover
+					align="start"
+					side="bottom"
+					sideOffset={18}
 				>
-					Create
-				</Button>
-				<Button
-					className="block rounded-sm md:hidden"
-					size="sm"
-					variant="primary"
-				>
-					<Plus className="h-4 w-4" />
-				</Button>
+					<Button
+						className="hidden h-auto rounded-sm px-2 py-1.5 md:block"
+						size="sm"
+						variant="primary"
+					>
+						Create
+					</Button>
+				</FormPopover>
+				<FormPopover>
+					<Button
+						className="block rounded-sm md:hidden"
+						size="sm"
+						variant="primary"
+					>
+						<Plus className="h-4 w-4" />
+					</Button>
+				</FormPopover>
 			</div>
 			<div className="ml-auto flex items-center gap-x-2">
 				<OrganizationSwitcher
