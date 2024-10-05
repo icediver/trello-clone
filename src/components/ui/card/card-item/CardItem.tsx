@@ -1,5 +1,6 @@
 'use client';
 
+import { Draggable } from '@hello-pangea/dnd';
 import { Card } from '@prisma/client';
 
 interface ICardItem {
@@ -9,11 +10,21 @@ interface ICardItem {
 
 export function CardItem({ data, index }: ICardItem) {
 	return (
-		<li
-			className="truncate rounded-md border-2 border-transparent bg-white px-3 py-2 text-sm shadow-sm hover:border-black"
-			role="button"
+		<Draggable
+			draggableId={data.id}
+			index={index}
 		>
-			{data.title}
-		</li>
+			{(provided) => (
+				<li
+					{...provided.draggableProps}
+					{...provided.dragHandleProps}
+					ref={provided.innerRef}
+					className="truncate rounded-md border-2 border-transparent bg-white px-3 py-2 text-sm shadow-sm hover:border-black"
+					role="button"
+				>
+					{data.title}
+				</li>
+			)}
+		</Draggable>
 	);
 }
