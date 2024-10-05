@@ -1,7 +1,8 @@
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
-import { ListContainer } from './_components/list-container';
+import { ListContainer } from '@/components/ui/list/list-container/ListContainer';
+
 import { db } from '@/lib/db.utils';
 
 interface Props {
@@ -17,7 +18,7 @@ export default async function BoardIdPage({
 
 	if (!orgId) redirect('/select-org');
 
-	const lists = db.list.findMany({
+	const lists = await db.list.findMany({
 		where: {
 			boardId: params.boardId,
 			board: {
@@ -35,6 +36,7 @@ export default async function BoardIdPage({
 			order: 'asc',
 		},
 	});
+
 	return (
 		<div className="h-full overflow-x-auto p-4">
 			<ListContainer
