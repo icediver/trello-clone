@@ -1,5 +1,6 @@
 'use client';
 
+import { Auditlog } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
@@ -14,6 +15,7 @@ import {
 } from '../../shadcn/dialog';
 
 import { Actions } from './actions/Actions';
+import { Activity } from './activity/Activity';
 import { Description } from './description/Description';
 import { Header } from './header/Header';
 import { fetcher } from '@/lib/fetcher';
@@ -27,6 +29,16 @@ export function CardModal() {
 		queryKey: ['card', id],
 		queryFn: () => {
 			return fetcher(`/api/cards/${id}`);
+		},
+	});
+
+	const { data: auditLogsData } = useQuery<Auditlog[]>({
+		queryKey: ['card-logs', id],
+
+		queryFn: async () => {
+			const log = await fetcher(`/api/cards/${id}/logs`);
+			console.log(log);
+			return log;
 		},
 	});
 
@@ -50,6 +62,11 @@ export function CardModal() {
 								<Description.Skeleton />
 							) : (
 								<Description data={cardData} />
+							)}
+							{!auditLogsData ? (
+								<Activity.Skeleton />
+							) : (
+								<Activity items={auditLogsData} />
 							)}
 						</div>
 					</div>

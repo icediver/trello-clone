@@ -35,7 +35,6 @@ const handler = async (
 		});
 
 		updatedCards = await db.$transaction(transaction);
-		console.log(updatedCards);
 	} catch (error) {
 		return {
 			error: 'Failed to reorder',

@@ -1,10 +1,12 @@
 'use server';
 
 import { auth } from '@clerk/nextjs/server';
+import { ACTION, ENTITY_TYPE } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
 import { UpdateCard } from './schema';
 import { InputType, ReturnType } from './types';
+import { createAuditLog } from '@/lib/create-audit-log';
 import { createSafeAction } from '@/lib/create-safe-action';
 import { db } from '@/lib/db.utils';
 
@@ -34,6 +36,12 @@ const handler = async (
 			data: {
 				...values,
 			},
+		});
+		await createAuditLog({
+			entityId: card.id,
+			entityTitle: card.title,
+			entityType: ENTITY_TYPE.CARD,
+			action: ACTION.UPDATE,
 		});
 	} catch (error) {
 		return {

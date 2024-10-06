@@ -1,11 +1,13 @@
 'use server';
 
 import { auth } from '@clerk/nextjs/server';
+import { ACTION, ENTITY_TYPE } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { DeleteBoard } from './schema';
 import { InputType, ReturnType } from './types';
+import { createAuditLog } from '@/lib/create-audit-log';
 import { createSafeAction } from '@/lib/create-safe-action';
 import { db } from '@/lib/db.utils';
 
@@ -27,6 +29,13 @@ const handler = async (
 			where: {
 				id,
 			},
+		});
+
+		await createAuditLog({
+			entityId: board.id,
+			entityTitle: board.title,
+			entityType: ENTITY_TYPE.BOARD,
+			action: ACTION.DELETE,
 		});
 	} catch (error) {
 		return {
