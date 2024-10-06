@@ -6,6 +6,7 @@ import { ElementRef, useRef } from 'react';
 import { toast } from 'sonner';
 
 import { useAction } from '@/hooks/useActions';
+import { useProModal } from '@/hooks/useProModal';
 
 import { Button } from '../../shadcn/button';
 import {
@@ -33,6 +34,7 @@ export function FormPopover({
 	align = 'start',
 	sideOffset = 0,
 }: IFormPopover) {
+	const proModal = useProModal();
 	const router = useRouter();
 	const closeRef = useRef<ElementRef<'button'>>(null);
 
@@ -44,6 +46,7 @@ export function FormPopover({
 		},
 		onError: (error) => {
 			toast.error(error);
+			proModal.onOpen();
 		},
 	});
 

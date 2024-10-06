@@ -9,6 +9,11 @@ import { CreateBoard } from './schema';
 import { createAuditLog } from '@/lib/create-audit-log';
 import { createSafeAction } from '@/lib/create-safe-action';
 import { db } from '@/lib/db.utils';
+import {
+	hasAvailableCount,
+	incrementAvailableCount,
+} from '@/lib/org-limit';
+import { checkSubscription } from '@/lib/subscription';
 
 const handler = async (
 	data: InputType
@@ -18,6 +23,16 @@ const handler = async (
 	if (!userId || !orgId) {
 		return {
 			error: 'Unauthorized',
+		};
+	}
+
+	const canCreateBoard = await hasAvailableCount();
+	const isPro = await checkSubscription();
+
+	if (!canCreateBoard && !isPro) {
+		return {
+			error:
+				'You have reached your limit of free boards. Upgrade your account to create more.',
 		};
 	}
 
@@ -56,6 +71,10 @@ const handler = async (
 				imageUserName,
 			},
 		});
+
+		if (!isPro) {
+			await incrementAvailableCount();
+		}
 
 		await createAuditLog({
 			entityId: board.id,

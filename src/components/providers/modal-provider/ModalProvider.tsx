@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { CardModal } from '@/components/ui/modals/card-modal';
+import { ProModal } from '@/components/ui/modals/pro-modal/ProModal';
 
 interface IModalProvider {}
 
@@ -17,6 +18,7 @@ export function ModalProvider({}: IModalProvider) {
 	return (
 		<>
 			<CardModal />
+			<ProModal />
 		</>
 	);
 }

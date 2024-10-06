@@ -7,7 +7,10 @@ import { FormPopover } from '../../form/form-popover/FormPopover';
 import { Skeleton } from '../../shadcn/skeleton';
 import { Hint } from '../hint/Hint';
 
+import { MAX_FREE_BOARDS } from '@/constants/board.constants';
 import { db } from '@/lib/db.utils';
+import { getAvailableCount } from '@/lib/org-limit';
+import { checkSubscription } from '@/lib/subscription';
 
 export async function BoardList() {
 	const { orgId } = auth();
@@ -22,6 +25,9 @@ export async function BoardList() {
 			createdAt: 'desc',
 		},
 	});
+
+	const availableCount = await getAvailableCount();
+	const isPro = await checkSubscription();
 
 	return (
 		<div className="space-y-4">
@@ -54,7 +60,11 @@ export async function BoardList() {
 						role="button"
 					>
 						<p className="text-sm">Create new board</p>
-						<span className="text-xs">5 remaining</span>
+						<span className="text-xs">
+							{isPro
+								? 'Ulimited'
+								: `${MAX_FREE_BOARDS - availableCount} remaining`}
+						</span>
 						<Hint
 							sideOffset={40}
 							description={`Free Workspaces can have up to 5 boards. For unlimited boards upgrade this workspace.`}

@@ -10,6 +10,7 @@ import { InputType, ReturnType } from './types';
 import { createAuditLog } from '@/lib/create-audit-log';
 import { createSafeAction } from '@/lib/create-safe-action';
 import { db } from '@/lib/db.utils';
+import { decreaseAvailableCount } from '@/lib/org-limit';
 
 const handler = async (
 	data: InputType
@@ -30,6 +31,8 @@ const handler = async (
 				id,
 			},
 		});
+
+		await decreaseAvailableCount();
 
 		await createAuditLog({
 			entityId: board.id,

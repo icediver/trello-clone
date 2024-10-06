@@ -6,7 +6,11 @@ import Image from 'next/image';
 
 import { Skeleton } from '@/components/ui/shadcn/skeleton';
 
-export function Info() {
+interface IInfoProps {
+	isPro?: boolean;
+}
+
+export function Info({ isPro }: IInfoProps) {
 	const { organization, isLoaded } = useOrganization();
 
 	if (!isLoaded) return <Info.Skeleton />;
@@ -27,7 +31,7 @@ export function Info() {
 				</p>
 				<div className="flex items-center text-xs text-muted-foreground">
 					<CreditCard className="mr-1 h-3 w-3" />
-					Free
+					{isPro ? 'Pro' : 'Free'}
 				</div>
 			</div>
 		</div>
