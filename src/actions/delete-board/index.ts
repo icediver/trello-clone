@@ -11,6 +11,7 @@ import { createAuditLog } from '@/lib/create-audit-log';
 import { createSafeAction } from '@/lib/create-safe-action';
 import { db } from '@/lib/db.utils';
 import { decreaseAvailableCount } from '@/lib/org-limit';
+import { checkSubscription } from '@/lib/subscription';
 
 const handler = async (
 	data: InputType
@@ -22,6 +23,8 @@ const handler = async (
 			error: 'Unauthorized',
 		};
 	}
+
+	const isPro = await checkSubscription();
 	const { id } = data;
 
 	let board;
@@ -31,8 +34,9 @@ const handler = async (
 				id,
 			},
 		});
-
-		await decreaseAvailableCount();
+		if (!isPro) {
+			await decreaseAvailableCount();
+		}
 
 		await createAuditLog({
 			entityId: board.id,
