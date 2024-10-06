@@ -4,7 +4,7 @@ import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { CopyList } from './schema';
+import { CopyCard } from './schema';
 import { InputType, ReturnType } from './types';
 import { createSafeAction } from '@/lib/create-safe-action';
 import { db } from '@/lib/db.utils';
@@ -21,50 +21,36 @@ const handler = async (
 	}
 	const { id, boardId } = data;
 
-	let list;
+	let card;
 	try {
-		const listToCopy = await db.list.findUnique({
+		const cardToCopy = await db.card.findUnique({
 			where: {
 				id,
 			},
-			include: {
-				cards: true,
-			},
 		});
 
-		if (!listToCopy) {
+		if (!cardToCopy) {
 			return {
-				error: 'List not found',
+				error: 'Card not found',
 			};
 		}
-
-		const lastList = await db.list.findFirst({
+		const lastCard = await db.card.findFirst({
 			where: {
-				boardId,
+				listId: cardToCopy.listId,
 			},
 			orderBy: {
-				createdAt: 'desc',
+				order: 'desc',
 			},
 			select: { order: true },
 		});
-		const newOrder = lastList ? lastList.order + 1 : 1;
-		list = await db.list.create({
+
+		const newOrder = lastCard ? lastCard.order + 1 : 1;
+		card = await db.card.create({
 			data: {
-				title: `${listToCopy.title} - Copy`,
-				boardId: listToCopy.boardId,
+				title: `${cardToCopy.title} - Copy`,
+				description: cardToCopy.description,
 				order: newOrder,
-				cards: {
-					createMany: {
-						data: listToCopy.cards.map((card) => ({
-							title: card.title,
-							description: card.description,
-							order: card.order,
-						})),
-					},
-				},
-			},
-			include: {
-				cards: true,
+				listId: cardToCopy.listId,
 			},
 		});
 	} catch (error) {
@@ -75,8 +61,8 @@ const handler = async (
 	revalidatePath(`/board/${boardId}`);
 
 	return {
-		data: list,
+		data: card,
 	};
 };
 
-export const copyList = createSafeAction(CopyList, handler);
+export const copyCard = createSafeAction(CopyCard, handler);

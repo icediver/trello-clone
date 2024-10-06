@@ -1,9 +1,5 @@
 'use client';
 
-import {
-	Popover,
-	PopoverClose,
-} from '@radix-ui/react-popover';
 import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ElementRef, useRef } from 'react';
@@ -13,6 +9,8 @@ import { useAction } from '@/hooks/useActions';
 
 import { Button } from '../../shadcn/button';
 import {
+	Popover,
+	PopoverClose,
 	PopoverContent,
 	PopoverTrigger,
 } from '../../shadcn/popover';

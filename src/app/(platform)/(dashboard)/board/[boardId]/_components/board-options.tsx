@@ -1,17 +1,12 @@
 'use client';
 
-import { PopoverClose } from '@radix-ui/react-popover';
-import {
-	MoreHorizontal,
-	Trash,
-	Trash2,
-	X,
-} from 'lucide-react';
+import { MoreHorizontal, Trash2, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/shadcn/button';
 import {
 	Popover,
+	PopoverClose,
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/shadcn/popover';
