@@ -27,7 +27,6 @@ const handler = async (
 		board = await db.board.update({
 			where: {
 				id,
-				//orgId,
 			},
 			data: {
 				title,
@@ -40,7 +39,7 @@ const handler = async (
 			entityType: ENTITY_TYPE.BOARD,
 			action: ACTION.UPDATE,
 		});
-	} catch (error) {
+	} catch {
 		return {
 			error: 'Failed to update',
 		};

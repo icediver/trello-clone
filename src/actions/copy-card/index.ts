@@ -3,7 +3,6 @@
 import { auth } from '@clerk/nextjs/server';
 import { ACTION, ENTITY_TYPE } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 import { CopyCard } from './schema';
 import { InputType, ReturnType } from './types';
@@ -62,7 +61,7 @@ const handler = async (
 			entityType: ENTITY_TYPE.CARD,
 			action: ACTION.CREATE,
 		});
-	} catch (error) {
+	} catch {
 		return {
 			error: 'Failed to copy',
 		};

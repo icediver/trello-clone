@@ -92,7 +92,7 @@ export function Actions({ data }: IActions) {
 	);
 }
 
-Actions.Skeleton = function () {
+Actions.Skeleton = function ActionsSkeleton() {
 	return (
 		<div className="mt-2 space-y-2">
 			<Skeleton className="h-4 w-20 bg-neutral-200" />

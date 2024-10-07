@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db.utils';
 
 export async function GET(
-	req: Request,
+	_req: Request,
 	{ params }: { params: { cardId: string } }
 ) {
 	try {

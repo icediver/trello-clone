@@ -15,9 +15,7 @@ import { Button } from '../../shadcn/button';
 
 import { stripeRedirect } from '@/actions/stripe-redirect';
 
-interface IProModal {}
-
-export function ProModal({}: IProModal) {
+export function ProModal() {
 	const proModal = useProModal();
 	const { execute, isLoading } = useAction(stripeRedirect, {
 		onSuccess: (data) => {

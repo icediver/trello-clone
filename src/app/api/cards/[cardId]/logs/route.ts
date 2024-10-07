@@ -1,6 +1,5 @@
 import { auth } from '@clerk/nextjs/server';
 import { ENTITY_TYPE } from '@prisma/client';
-import { request } from 'http';
 import { NextResponse } from 'next/server';
 
 import { db } from '@/lib/db.utils';

@@ -27,10 +27,6 @@ const handler = async (
 		list = await db.list.update({
 			where: {
 				id,
-				//boardId,
-				//board: {
-				//	orgId,
-				//},
 			},
 			data: {
 				title,
@@ -43,7 +39,7 @@ const handler = async (
 			entityType: ENTITY_TYPE.LIST,
 			action: ACTION.UPDATE,
 		});
-	} catch (error) {
+	} catch {
 		return {
 			error: 'Failed to update',
 		};

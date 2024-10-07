@@ -2,7 +2,6 @@
 
 import { Auditlog } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
 
 import { useCardModal } from '@/hooks/useCardModal';
 

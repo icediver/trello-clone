@@ -3,7 +3,6 @@
 import { auth } from '@clerk/nextjs/server';
 import { ACTION, ENTITY_TYPE } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 import { DeleteList } from './schema';
 import { InputType, ReturnType } from './types';
@@ -37,13 +36,12 @@ const handler = async (
 			entityType: ENTITY_TYPE.LIST,
 			action: ACTION.DELETE,
 		});
-	} catch (error) {
+	} catch {
 		return {
 			error: 'Failed to delete',
 		};
 	}
 	revalidatePath(`/board/${boardId}`);
-	//redirect(`/board/${boardId}`);
 	return {
 		data: list,
 	};

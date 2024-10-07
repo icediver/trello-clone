@@ -18,9 +18,7 @@ import { useAction } from '@/hooks/useActions';
 
 import { createList } from '@/actions/create-list';
 
-interface IListForm {}
-
-export function ListForm({}: IListForm) {
+export function ListForm() {
 	const router = useRouter();
 	const params = useParams();
 

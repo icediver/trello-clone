@@ -27,11 +27,6 @@ const handler = async (
 		card = await db.card.update({
 			where: {
 				id,
-				//list: {
-				//	board: {
-				//		orgId,
-				//	},
-				//},
 			},
 			data: {
 				...values,
@@ -43,7 +38,7 @@ const handler = async (
 			entityType: ENTITY_TYPE.CARD,
 			action: ACTION.UPDATE,
 		});
-	} catch (error) {
+	} catch {
 		return {
 			error: 'Failed to update',
 		};

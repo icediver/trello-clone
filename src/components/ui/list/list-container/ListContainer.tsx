@@ -95,7 +95,7 @@ export function ListContainer({
 		}
 
 		if (type === 'card') {
-			let newOrderedData = [...orderedData];
+			const newOrderedData = [...orderedData];
 
 			const sourceList = newOrderedData.find(
 				(list) => list.id === source.droppableId

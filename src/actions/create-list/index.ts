@@ -62,7 +62,7 @@ const handler = async (
 			entityType: ENTITY_TYPE.LIST,
 			action: ACTION.CREATE,
 		});
-	} catch (error) {
+	} catch {
 		return {
 			error: 'Failed to create',
 		};

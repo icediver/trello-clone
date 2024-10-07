@@ -82,7 +82,7 @@ const handler = async (
 			entityType: ENTITY_TYPE.BOARD,
 			action: ACTION.CREATE,
 		});
-	} catch (error) {
+	} catch {
 		return {
 			error: 'Failed to create board',
 		};

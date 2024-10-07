@@ -19,7 +19,10 @@ export function Info({ isPro }: IInfoProps) {
 		<div className="flex items-center gap-x-4">
 			<div className="relative h-[60px] w-[60px]">
 				<Image
-					src={organization?.imageUrl!}
+					src={
+						organization?.imageUrl ||
+						'/images/org-no-image.png'
+					}
 					className="rounded-md object-cover"
 					alt="Organization"
 					fill

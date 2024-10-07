@@ -34,7 +34,7 @@ const handler = async (
 		});
 
 		lists = await db.$transaction(transaction);
-	} catch (error) {
+	} catch {
 		return {
 			error: 'Failed to reorder',
 		};
